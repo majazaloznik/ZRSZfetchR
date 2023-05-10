@@ -7,3 +7,6 @@ Sys.setenv(https_proxy_user="http://proxy.gov.si:80")
 
 cat("UMAR proxy is set!\n")
 options(continue = " ")
+if (interactive()) {
+  suppressMessages(require(devtools))
+}
