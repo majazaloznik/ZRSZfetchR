@@ -5,7 +5,8 @@
 #'
 #' @return nothing, just prints stuff out.
 #' @export
-
+library(covr)
+library(rcmdcheck)
 hello <- function() {
   print("Hello, world!")
 }
