@@ -3,6 +3,7 @@
 export(insert_new_source)
 export(prepare_category_relationship_table)
 export(prepare_category_table)
+export(prepare_category_table_table)
 export(prepare_source_table)
 export(prepare_table_table)
 export(zrsz_bo_excel_parser)

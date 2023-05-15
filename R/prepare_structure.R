@@ -115,5 +115,6 @@ prepare_category_table_table <- function(meta, con) {
              source_id = source_id) |>
     dplyr::rowwise() |>
     dplyr::mutate(table_id = UMARaccessR::get_table_id_from_table_code(code, con)) |>
-    dplyr::select(-code)
+    dplyr::select(-code) |>
+    na.omit()
 }
