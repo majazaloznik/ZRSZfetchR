@@ -49,6 +49,9 @@ insert_new_table_structures <- function(meta, con) {
   SURSfetchR::sql_function_call(con,
                                 "insert_new_category_table",
                                 as.list(prepare_category_table_table(meta, con)))
+  SURSfetchR::sql_function_call(con,
+                                "insert_new_table_dimensions",
+                                as.list(prepare_table_dimensions_table(meta, con)))
 
 
 }

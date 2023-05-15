@@ -118,3 +118,25 @@ prepare_category_table_table <- function(meta, con) {
     dplyr::select(-code) |>
     na.omit()
 }
+
+
+#' Prepare table to insert into `table_dimensions` table
+#'
+#' Helper function that manually prepares the table_dimensions table.
+#' Returns table ready to insert into the `table_dimensions`table with the
+#' db_writing family of functions.
+#'
+#' @param con connection to the database
+#' @return a dataframe with the `table_id`, `dimension_name`, `time` columns for
+#' each dimension of this table.
+#' @export
+#'
+prepare_table_dimensions_table <- function(meta, con){
+  x <- meta$code
+  data.frame(code = x)  |>
+    dplyr::mutate(table_id = UMARaccessR::get_table_id_from_table_code(code, con)) |>
+    dplyr::mutate(dimension = "Vrednost",
+                  is_time = rep(0)) |>
+    dplyr::select(-code) |>
+    dplyr::arrange(table_id)
+}
