@@ -60,3 +60,28 @@ prepare_category_table <- function(meta, con) {
              name = meta$category,
              source_id = source_id)
 }
+
+
+#' Prepare table to insert into `category_relationship` table
+#'
+#' Helper function that manually prepares the category_relationship table.
+#' Returns table ready to insert into the `category_relationship` table with the db_writing family
+#' of functions from SURSfetchR using \link[SURSfetchR]{sql_function_call}
+#'
+#' @param con connection to the database
+#'
+#' @return a dataframe with the `id`, `parent_id`, `source_id` for each relationship
+#' betweeh categories
+#' @export
+#'
+prepare_category_relationship_table <- function(meta, con) {
+  source_id <- UMARaccessR::get_source_code_from_source_name("ZRSZ", con)[1,1]
+  x <- meta$category
+  id <- dplyr::tbl(con, "category") |>
+    dplyr::filter(name == x) |>
+    dplyr::pull(id)
+
+  data.frame(id = id,
+             parent_id = 0,
+             source_id = source_id)
+}

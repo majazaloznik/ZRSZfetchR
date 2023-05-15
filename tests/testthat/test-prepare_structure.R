@@ -14,6 +14,8 @@ dittodb::with_mock_db({
     expect_equal(dim(x), c(1,5))
     x <- prepare_category_table(meta, con)
     expect_equal(dim(x), c(1,3))
+    x <- prepare_category_relationship_table(meta, con)
+    expect_equal(dim(x), c(1,3))
   })
 })
 
