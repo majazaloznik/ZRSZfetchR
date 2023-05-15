@@ -68,8 +68,8 @@
       "RemoteRepo": "SURSfetchR",
       "RemoteUsername": "majazaloznik",
       "RemoteRef": "HEAD",
-      "RemoteSha": "2fabe8aa23a7b5332f421e31fb7176d8b3b42962",
-      "Hash": "49adacf2097d270c2df837098026b382",
+      "RemoteSha": "3d29d47bfb4f3154e80d7871376758d0e45e13ca",
+      "Hash": "add1323c9310f3926b1dc8a1a086cebd",
       "Requirements": [
         "DBI",
         "RPostgres",
@@ -92,6 +92,28 @@
         "stringi",
         "tibble",
         "tidyr"
+      ]
+    },
+    "UMARaccessR": {
+      "Package": "UMARaccessR",
+      "Version": "0.1.0",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "UMARaccessR",
+      "RemoteUsername": "majazaloznik",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "e34cc4beb0e49ee7932584d32db3c64c95f3dee0",
+      "Hash": "bc63e7968e6fd87b3bef2f733089009e",
+      "Requirements": [
+        "DBI",
+        "RPostgres",
+        "dplyr",
+        "lubridate",
+        "magrittr",
+        "openxlsx",
+        "rlang",
+        "stringr"
       ]
     },
     "askpass": {

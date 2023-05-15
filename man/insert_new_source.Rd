@@ -10,9 +10,9 @@ insert_new_source(con)
 \item{con}{connection to the database.}
 }
 \value{
-number of rows inserted
+nothing
 }
 \description{
 This is a one off, but is here for completeness. Used to insert the ZRSZ source
-into the database
+into the database. Also adds the cover category for the source.
 }

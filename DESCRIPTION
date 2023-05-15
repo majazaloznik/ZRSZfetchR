@@ -20,6 +20,10 @@ Imports:
     openxlsx,
     RPostgres (>= 1.4.5),
     SURSfetchR (>= 0.0.4),
-    tidyr (>= 1.3.0)
+    tidyr (>= 1.3.0),
+    UMARaccessR (>= 0.1.0)
 Remotes:
-    majazaloznik/SURSfetchR
+    majazaloznik/SURSfetchR,
+    majazaloznik/UMARaccessR
+Depends: 
+    R (>= 2.10)
