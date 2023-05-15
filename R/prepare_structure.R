@@ -69,6 +69,7 @@ prepare_category_table <- function(meta, con) {
 #' of functions from SURSfetchR using \link[SURSfetchR]{sql_function_call}
 #'
 #' @param con connection to the database
+#' @param meta dataframe with code, name, url and note columns
 #'
 #' @return a dataframe with the `id`, `parent_id`, `source_id` for each relationship
 #' betweeh categories
@@ -84,4 +85,35 @@ prepare_category_relationship_table <- function(meta, con) {
   data.frame(id = id,
              parent_id = 0,
              source_id = source_id)
+}
+
+
+
+#' Prepare table to insert into `category_table` table
+#'
+#' Helper function that manually prepares the category_table table.
+#' Returns table ready to insert into the `category_table` table with the db_writing family
+#' of functions from SURSfetchR using \link[SURSfetchR]{sql_function_call}
+#' A single table can have multiple parents - meaning
+#' it is member of several categories (usually no more than two tho). .
+#'
+#' @param meta dataframe with code, name, url and note columns
+#' @param con connection to the database
+#'
+#' @return a dataframe with the `category_id` `table_id` and `source_id` columns for
+#' each table-category relationship.
+#' @export
+#'
+prepare_category_table_table <- function(meta, con) {
+  source_id <- UMARaccessR::get_source_code_from_source_name("ZRSZ", con)[1,1]
+  x <- meta$category
+  id <- dplyr::tbl(con, "category") |>
+    dplyr::filter(name == x) |>
+    dplyr::pull(id)
+  data.frame(code = meta$code,
+             category_id = id,
+             source_id = source_id) |>
+    dplyr::rowwise() |>
+    dplyr::mutate(table_id = UMARaccessR::get_table_id_from_table_code(code, con)) |>
+    dplyr::select(-code)
 }

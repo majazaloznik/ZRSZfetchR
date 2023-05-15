@@ -7,6 +7,8 @@
 prepare_category_relationship_table(meta, con)
 }
 \arguments{
+\item{meta}{dataframe with code, name, url and note columns}
+
 \item{con}{connection to the database}
 }
 \value{
