@@ -13,7 +13,6 @@ insert_new_table_structures(meta, con)
 }
 \value{
 nothing
-#' @export
 }
 \description{
 This is here for the record/reprodcibility, because it was only done once.

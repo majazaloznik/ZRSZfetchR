@@ -103,7 +103,7 @@ prepare_category_relationship_table <- function(meta, con) {
 #' @return a dataframe with the `category_id` `table_id` and `source_id` columns for
 #' each table-category relationship.
 #' @export
-#' @ImportFrom("stats", "na.omit")
+#' @importFrom stats na.omit
 prepare_category_table_table <- function(meta, con) {
   source_id <- UMARaccessR::get_source_code_from_source_name("ZRSZ", con)[1,1]
   x <- meta$category
@@ -131,7 +131,7 @@ prepare_category_table_table <- function(meta, con) {
 #' @return a dataframe with the `table_id`, `dimension_name`, `time` columns for
 #' each dimension of this table.
 #' @export
-#' @ImportFrom("stats", "na.omit")
+#' @importFrom stats na.omit
 prepare_table_dimensions_table <- function(meta, con){
   x <- meta$code
   data.frame(code = x)  |>
@@ -157,7 +157,7 @@ prepare_table_dimensions_table <- function(meta, con){
 #' @return a dataframe with the `dimension_id`, `values` and `valueTexts`
 #' columns for this table.
 #' @export
-#' @ImportFrom("stats", "na.omit")
+#' @importFrom stats na.omit
 prepare_dimension_levels_table <- function(meta, con) {
   table_id <- UMARaccessR::get_table_id_from_table_code(meta$code, con)
   dim_id <- UMARaccessR::get_dim_id_from_table_id(table_id, "Vrednost", con)
