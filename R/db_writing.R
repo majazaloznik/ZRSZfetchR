@@ -52,6 +52,17 @@ insert_new_table_structures <- function(meta, con) {
   SURSfetchR::sql_function_call(con,
                                 "insert_new_table_dimensions",
                                 as.list(prepare_table_dimensions_table(meta, con)))
-
+  SURSfetchR::sql_function_call(con,
+                                "insert_new_dimension_levels",
+                                as.list(prepare_dimension_levels_table(meta, con)))
+  SURSfetchR::sql_function_call(con,
+                                "insert_new_unit",
+                                list(name = "\u0161tevilo"))
+  SURSfetchR::sql_function_call(con,
+                                "insert_new_series",
+                                unname(as.list(prepare_series_table(meta, con))))
+  SURSfetchR::sql_function_call(con,
+                                "insert_new_series_levels",
+                                unname(as.list(prepare_series_levels_table(meta, con))))
 
 }

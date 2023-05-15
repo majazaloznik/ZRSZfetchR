@@ -20,6 +20,12 @@ dittodb::with_mock_db({
     expect_equal(dim(x), c(1,3))
     x <- prepare_table_dimensions_table(meta, con)
     expect_equal(dim(x), c(1,3))
+    x <- prepare_dimension_levels_table(meta, con)
+    expect_equal(dim(x), c(1,3))
+    x <- prepare_series_table(meta, con)
+    expect_equal(dim(x), c(1,5))
+    x <- prepare_series_levels_table(meta, con)
+    expect_equal(dim(x), c(1,3))
 
   })
 })
