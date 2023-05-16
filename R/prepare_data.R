@@ -74,8 +74,7 @@ prepare_vintage_table <- function(meta, df, con){
 #'
 
 #' @param con connection to database
-#' @param df list with at least monthly and annual dataframes with the data_points
-#' output of \link[MFfetchR]{mf_excel_parser}.
+#' @param df ataframe with the data_points output of \link[ZRSZfetchR ]{zrsz_bo_excel_parser}.
 #' @param meta dataframe with code, name, url and note columns
 #' @return a dataframe with the period_id, value and id values for all the vintages in the table.
 #'

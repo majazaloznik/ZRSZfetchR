@@ -11,7 +11,7 @@ The goal of ZRSZfetchR is to check for new ZRSZ data tables somewhere (a folder 
 
 ## Installation
 
-You can install the development version of MFfetchR from [GitHub](https://github.com/) with:
+You can install the development version of ZRSZfetchR from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
