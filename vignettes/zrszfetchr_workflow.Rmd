@@ -1,0 +1,55 @@
+---
+title: "ZRSZfetchR workflow"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{zrszfetchr_workflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This document gives a high level overview of the `ZRSZferchR` package and it's functionalities and how it fits into the UMAR data worklfow. 
+
+This is one of a family of data fetching packages, which include  `SURSfetchR`, `MFfetchR` and others, providing specialised functions to download, extract and clean up data from these sources and prepare it into a suitable format for ingestion into the UMAR data platform. The latter part of the workflow is handled by the `UMARaccessR` package. 
+
+## Data inputs
+
+Currently the package only supports importing the following inputs:
+
+* **BO** - *Gibanje registrirane brezposelnosti po mesecih, 1992-2023* also known as `Mesecno_gibanje_BO_1992-2023.xlsx` located [here](https://www.ess.gov.si/fileadmin/user_upload/Trg_dela/Dokumenti_TD/Trg_dela_v_stevilkah/Registrirana_brezposelnost/Mesecno_gibanje_BO_1992-2023.xlsx). This is a single series table. 
+
+### BO: Registrirana brezposelnost - mesecno
+
+This excel file has the following structure: monthly data is divided into separate sheets for each decade, where each year has its own column, the header rows start in row 3. 
+
+*Assumption:* The structure of the data stays constant with simply new sheets being added for each new decade. 
+
+Presumably the filename/url will change with the new year, so the hardcoded url will need to be updated.
+
+## Workflow:
+
+Each data input requires the following steps:
+
+1. insert the data source (ZRSZ) into the database - this has already been done as a one off action. 
+1. prepare the metadata (structure) to import into the database - this is a one off action for each table.
+2. insert new structural data into the database - also a one off action for each table. 
+3. depending on the source table, it is either updated on-line on a certain date or sent via email, so there are different triggers for accessing the data. 
+4. when the data is acquired, the appropriate excel parser function is run, to extract the data.
+5. then the `insert_new_data` function is run, which prepares the new vintages and the data point tables to be inserted into the database. 
+
+Step 1. was a one off. 
+Steps 2.-3. are done manually for each new table and the old code is currently residing in the `.sandbox.R` file. 
+Steps 4-6 are all run from a script in the `O:\Avtomatizacija\umar-automation-scripts` repository, triggered by an appropriate trigger in the Task scheduler. 
+
+
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ZRSZfetchR)
+```

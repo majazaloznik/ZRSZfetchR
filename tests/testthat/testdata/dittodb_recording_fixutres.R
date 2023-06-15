@@ -209,3 +209,16 @@ library(dittodb)
 # on.exit(dbDisconnect)
 # insert_new_data(meta, df, con)
 # stop_db_capturing()
+
+
+# start_db_capturing()
+# con <- DBI::dbConnect(RPostgres::Postgres(),
+#                  dbname = "platform",
+#                  host = "localhost",
+#                  port = 5432,
+#                  user = "postgres",
+#                  password = Sys.getenv("PG_PG_PSW"))
+# DBI::dbExecute(con, "set search_path to test_platform")
+# on.exit(dbDisconnect)
+# zrsz_bo_script(con)
+# stop_db_capturing()

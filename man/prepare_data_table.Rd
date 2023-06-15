@@ -9,8 +9,7 @@ prepare_data_table(meta, df, con)
 \arguments{
 \item{meta}{dataframe with code, name, url and note columns}
 
-\item{df}{list with at least monthly and annual dataframes with the data_points
-output of \link[MFfetchR]{mf_excel_parser}.}
+\item{df}{ataframe with the data_points output of \link[ZRSZfetchR ]{zrsz_bo_excel_parser}.}
 
 \item{con}{connection to database}
 }

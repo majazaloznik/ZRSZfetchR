@@ -58,7 +58,7 @@ prepare_vintage_table <- function(meta, df, con){
         dplyr::slice_max(period_id)   |>
         dplyr::pull(period_id)
       if(identical(max_month, new_month)) {
-        stop(paste0("These monthly vintages for table ", table_name,
+        stop(paste0("These monthly vintages for table ", meta$code,
                     " are not new, they will not be inserted again."))
       } else {
         vintages <- vintage_table(tbl_id, con)
