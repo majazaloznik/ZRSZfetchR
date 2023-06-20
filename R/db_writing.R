@@ -81,7 +81,7 @@ insert_new_table_structures <- function(meta, con) {
 #' @param meta is the dataframe in the package with the table names
 #' @param df dataframes with the data_points
 #' @param con connection to database
-#'
+#' @param schema database schema
 #' @return list of tables with counts for each inserted row.
 #' @export
 #'
@@ -89,14 +89,14 @@ insert_new_table_structures <- function(meta, con) {
 #' \dontrun{
 #' purrr::walk(master_list_surs$code, ~insert_new_data(.x, con))
 #' }
-insert_new_data <- function(meta, df, con) {
+insert_new_data <- function(meta, df, con, schema) {
   vintages <- prepare_vintage_table(meta, df, con)
   # insert monthly data
   res <- SURSfetchR::sql_function_call(con,
                                             "insert_new_vintage",
                                             as.list(vintages))
 
-  insert_data_points(meta, df, con)
+  insert_data_points(meta, df, con, schema)
 
   lapply(res, sum)
 }
@@ -115,6 +115,7 @@ insert_new_data <- function(meta, df, con) {
 #' output of \link[ZRSZfetchR]{zrsz_bo_excel_parser} or similar.
 #' @param con connection to database
 #' @param meta is the dataframe in the package with the table names
+#' @param schema is the database schema
 #' @return nothing, just some printing along the way
 #' @export
 #'

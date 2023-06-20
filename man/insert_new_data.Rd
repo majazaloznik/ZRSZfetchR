@@ -4,7 +4,7 @@
 \alias{insert_new_data}
 \title{Insert new data for a table i.e. a vintage}
 \usage{
-insert_new_data(meta, df, con)
+insert_new_data(meta, df, con, schema)
 }
 \arguments{
 \item{meta}{is the dataframe in the package with the table names}
@@ -12,6 +12,8 @@ insert_new_data(meta, df, con)
 \item{df}{dataframes with the data_points}
 
 \item{con}{connection to database}
+
+\item{schema}{database schema}
 }
 \value{
 list of tables with counts for each inserted row.

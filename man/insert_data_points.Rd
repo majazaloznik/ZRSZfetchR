@@ -4,7 +4,7 @@
 \alias{insert_data_points}
 \title{Insert datapoints into data_point table}
 \usage{
-insert_data_points(meta, df, con)
+insert_data_points(meta, df, con, schema = "platform")
 }
 \arguments{
 \item{meta}{is the dataframe in the package with the table names}
@@ -13,6 +13,8 @@ insert_data_points(meta, df, con)
 output of \link[ZRSZfetchR]{zrsz_bo_excel_parser} or similar.}
 
 \item{con}{connection to database}
+
+\item{schema}{is the database schema}
 }
 \value{
 nothing, just some printing along the way
