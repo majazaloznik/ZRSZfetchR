@@ -85,10 +85,6 @@ insert_new_table_structures <- function(meta, con) {
 #' @return list of tables with counts for each inserted row.
 #' @export
 #'
-#' @examples
-#' \dontrun{
-#' purrr::walk(master_list_surs$code, ~insert_new_data(.x, con))
-#' }
 insert_new_data <- function(meta, df, con, schema) {
   vintages <- prepare_vintage_table(meta, df, con)
   # insert monthly data

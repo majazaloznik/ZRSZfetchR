@@ -24,8 +24,3 @@ vintages. This function inserts a set of new vintages and their corresponding
 data points to the database. It is possible to only have new monthly not annual
 vintages.
 }
-\examples{
-\dontrun{
-purrr::walk(master_list_surs$code, ~insert_new_data(.x, con))
-}
-}

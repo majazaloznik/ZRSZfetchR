@@ -210,7 +210,6 @@ library(dittodb)
 # insert_new_data(meta, df, con)
 # stop_db_capturing()
 
-
 # start_db_capturing()
 # con <- DBI::dbConnect(RPostgres::Postgres(),
 #                  dbname = "platform",
@@ -220,5 +219,5 @@ library(dittodb)
 #                  password = Sys.getenv("PG_PG_PSW"))
 # DBI::dbExecute(con, "set search_path to test_platform")
 # on.exit(dbDisconnect)
-# zrsz_bo_script(con)
+# zrsz_bo_script(con, schema = "test_platform")
 # stop_db_capturing()

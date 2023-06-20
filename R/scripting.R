@@ -7,10 +7,10 @@
 #' the database.
 #'
 #' @param con connection to database
-#'
+#' @param schema database schema
 #' @return number of rows inserted
 #' @export
-zrsz_bo_script <- function(con){
+zrsz_bo_script <- function(con, schema){
   # get urls
   current_year <- format(Sys.Date(), "%Y")
   url_part <- "https://www.ess.gov.si/fileadmin/user_upload/Trg_dela/Dokumenti_TD/Trg_dela_v_stevilkah/Registrirana_brezposelnost/Mesecno_gibanje_BO_1992-"
@@ -33,7 +33,7 @@ zrsz_bo_script <- function(con){
   # parse the data
   df <- zrsz_bo_excel_parser(temp_file)
   # write to
-  out <- insert_new_data(meta, df, con)
+  out <- insert_new_data(meta, df, con, schema)
 
   file.remove(temp_file)
   out

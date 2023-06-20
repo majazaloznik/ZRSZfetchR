@@ -4,10 +4,12 @@
 \alias{zrsz_bo_script}
 \title{Script for the BO table}
 \usage{
-zrsz_bo_script(con)
+zrsz_bo_script(con, schema)
 }
 \arguments{
 \item{con}{connection to database}
+
+\item{schema}{database schema}
 }
 \value{
 number of rows inserted

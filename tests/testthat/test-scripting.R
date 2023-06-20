@@ -8,7 +8,7 @@ dittodb::with_mock_db({
   DBI::dbExecute(con, "set search_path to test_platform")
 
   test_that("bo script works", {
-    x <- zrsz_bo_script(con)
+    x <- zrsz_bo_script(con, schema = "test_platform")
     expect_equal(x$count, 1)
   })
 })
