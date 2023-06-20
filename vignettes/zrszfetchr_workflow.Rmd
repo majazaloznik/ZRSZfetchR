@@ -2,7 +2,7 @@
 title: "ZRSZfetchR workflow"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{zrszfetchr_workflow}
+  %\VignetteIndexEntry{ZRSZfetchR workflow}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -23,7 +23,9 @@ This excel file has the following structure: monthly data is divided into separa
 
 *Assumption:* The structure of the data stays constant with simply new sheets being added for each new decade. 
 
-Presumably the filename/url will change with the new year, so the hardcoded url will need to be updated.
+Presumably the filename/url will change with the new year, as long as this happens sensibly: i.e. it's either the current year or the previous year (which might happen in January I guess), then the script can handle it.
+
+The data is updated on the website on the fifth of the month. 
 
 ## Workflow:
 
@@ -37,19 +39,7 @@ Each data input requires the following steps:
 5. then the `insert_new_data` function is run, which prepares the new vintages and the data point tables to be inserted into the database. 
 
 Step 1. was a one off. 
-Steps 2.-3. are done manually for each new table and the old code is currently residing in the `.sandbox.R` file. 
-Steps 4-6 are all run from a script in the `O:\Avtomatizacija\umar-automation-scripts` repository, triggered by an appropriate trigger in the Task scheduler. 
 
+Steps 2.-3. are done manually for each new table and the old code is currently residing in the `.sandbox.R` file. For adding new tables this will need to be manually adjusted and rerun. 
 
-
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
-
-```{r setup}
-library(ZRSZfetchR)
-```
+Steps 4-6 are all run from a script in the `O:\Avtomatizacija\umar-automation-scripts` repository, triggered by an appropriate trigger in the Task scheduler. E.g. the `zrsz_bo_script` function downloads the relevant data into a temp file, parses the data and inserts it into the database. 
