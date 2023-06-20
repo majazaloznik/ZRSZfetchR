@@ -10,3 +10,4 @@ options(continue = " ")
 if (interactive()) {
   suppressMessages(require(devtools))
 }
+Sys.setenv(PATH = paste("C:\\Program Files\\qpdf 11.4.0\\bin", Sys.getenv("PATH"), sep=";"))
