@@ -118,7 +118,7 @@ insert_new_data <- function(meta, df, con) {
 #' @return nothing, just some printing along the way
 #' @export
 #'
-insert_data_points <- function(meta, df, con){
+insert_data_points <- function(meta, df, con, schema="platform"){
   on.exit(DBI::dbExecute(con, sprintf("drop table tmp")))
 
   df <- prepare_data_table(meta, df, con)
@@ -140,15 +140,15 @@ insert_data_points <- function(meta, df, con){
                         AND tmp.interval_id = period.interval_id
                         WHERE period.id IS NULL
                        on conflict do nothing",
-                       DBI::dbQuoteIdentifier(con, "test_platform"),
-                       DBI::dbQuoteIdentifier(con, "test_platform")))
+                       DBI::dbQuoteIdentifier(con, schema),
+                       DBI::dbQuoteIdentifier(con, schema)))
   print(paste(x, "new rows inserted into the period table"))
 
   # insert data into main data_point table
   x <- DBI::dbExecute(con, sprintf("insert into %s.data_points
                        select vintage_id, period_id, value from tmp
                        on conflict do nothing",
-                       DBI::dbQuoteIdentifier(con, "test_platform")))
+                       DBI::dbQuoteIdentifier(con, schema)))
   print(paste(x, "new rows inserted into the data_points table"))
 
 }

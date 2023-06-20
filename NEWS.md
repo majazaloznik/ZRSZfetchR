@@ -1,3 +1,7 @@
+# ZRSZfetchR 0.1.1
+
+* made the db writing script schema-agnostic
+
 # ZRSZfetchR 0.1.0
 
 * Added script for automation. 
