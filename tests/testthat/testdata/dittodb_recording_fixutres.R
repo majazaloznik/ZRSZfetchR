@@ -200,14 +200,14 @@ library(dittodb)
 
 # start_db_capturing()
 # con <- dbConnect(RPostgres::Postgres(),
-#                  dbname = "sandbox",
+#                  dbname = "platform",
 #                  host = "localhost",
 #                  port = 5432,
-#                  user = "mzaloznik",
-#                  password = Sys.getenv("PG_local_MAJA_PSW"))
+#                  user = "postgres",
+#                  password = Sys.getenv("PG_PG_PSW"))
 # dbExecute(con, "set search_path to test_platform")
 # on.exit(dbDisconnect)
-# insert_new_data(meta, df, con)
+# insert_new_data(meta, df, con, schema = "test_platform")
 # stop_db_capturing()
 
 # start_db_capturing()
