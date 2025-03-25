@@ -31,15 +31,11 @@ jobs:
         run: |
           rm -f .Rprofile
 
-      - name: Install pak
+      - name: Install dependencies
         run: |
-          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
+          install.packages(c("remotes", "covr", "xml2"))
+          remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
-
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: any::covr, any::xml2
-          needs: coverage
 
       - name: Test coverage
         run: |
