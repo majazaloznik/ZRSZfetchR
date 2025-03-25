@@ -26,6 +26,16 @@ jobs:
         with:
           use-public-rspm: true
 
+      - name: Remove `.Rprofile`
+        shell: bash
+        run: |
+          rm -f .Rprofile
+
+      - name: Install pak
+        run: |
+          install.packages("pak", repos = "https://r-lib.github.io/p/pak/dev/")
+        shell: Rscript {0}
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::covr, any::xml2

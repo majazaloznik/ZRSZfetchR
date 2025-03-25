@@ -4,7 +4,6 @@ on:
   push:
     branches: [main, master]
   pull_request:
-    branches: [main, master]
 
 name: R-CMD-check
 
@@ -42,8 +41,12 @@ jobs:
       - name: Remove `.Rprofile`
         shell: bash
         run: |
-          rm .Rprofile
+          rm -f .Rprofile
 
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
 
       - uses: r-lib/actions/check-r-package@v2
         with:
