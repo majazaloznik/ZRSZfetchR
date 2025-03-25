@@ -95,7 +95,7 @@ zrsz_bo_os_excel_parser <- function(file_path) {
           tolower(month) == "jul." ~ "07",
           tolower(month) == "avg." ~ "08",
           tolower(month) == "sep." ~ "09",
-          tolower(month) == "sept" ~ "09",
+          tolower(month) == "sept." ~ "09",
           tolower(month) == "sep" ~ "09",
           tolower(month) == "okt." ~ "10",
           tolower(month) == "okt" ~ "10",
