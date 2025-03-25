@@ -4,12 +4,14 @@
 \alias{prepare_category_table_table}
 \title{Prepare table to insert into `category_table` table}
 \usage{
-prepare_category_table_table(meta, con)
+prepare_category_table_table(meta, con, schema = "platform")
 }
 \arguments{
 \item{meta}{dataframe with code, name, url and note columns}
 
 \item{con}{connection to the database}
+
+\item{schema}{schema name}
 }
 \value{
 a dataframe with the `category_id` `table_id` and `source_id` columns for
@@ -18,7 +20,7 @@ each table-category relationship.
 \description{
 Helper function that manually prepares the category_table table.
 Returns table ready to insert into the `category_table` table with the db_writing family
-of functions from SURSfetchR using \link[SURSfetchR]{sql_function_call}
+of functions from `UMARimportR`.
 A single table can have multiple parents - meaning
 it is member of several categories (usually no more than two tho). .
 }

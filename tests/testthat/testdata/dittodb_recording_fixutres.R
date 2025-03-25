@@ -1,223 +1,93 @@
-library(dittodb)
+# This code was run once and is here for archival purposes.
+#
+source("tests/testthat/helper-connection.R")
+
+# Enable verbose debugging to see query hashes
+options(dittodb.debug = TRUE)
 
 # start_db_capturing()
-# con <- dbConnect(RPostgres::Postgres(),
-#                  dbname = "sandbox",
-#                  host = "localhost",
-#                  port = 5432,
-#                  user = "mzaloznik",
-#                  password = Sys.getenv("PG_local_MAJA_PSW"))
-# dbExecute(con, "set search_path to test_platform")
+# con <- make_test_connection()
+# DBI::dbExecute(con, "set search_path to test_platform")
 # on.exit(dbDisconnect)
 # dplyr::tbl(con, "source") |>
 #   dplyr::summarise(max = max(id, na.rm = TRUE)) |>
 #   dplyr::pull()
 # stop_db_capturing()
-
+#
 # start_db_capturing()
-# con <- dbConnect(RPostgres::Postgres(),
-#                  dbname = "sandbox",
-#                  host = "localhost",
-#                  port = 5432,
-#                  user = "mzaloznik",
-#                  password = Sys.getenv("PG_local_MAJA_PSW"))
-# dbExecute(con, "set search_path to test_platform")
 # on.exit(dbDisconnect)
-# UMARaccessR::get_source_code_from_source_name("ZRSZ", con)[1,1]
+# con <- make_test_connection()
+# meta <- ZRSZfetchR:::meta[1,]
+# x <- prepare_table_table(meta, con, schema = "test_platform")
 # stop_db_capturing()
-
+#
 # start_db_capturing()
-# con <- dbConnect(RPostgres::Postgres(),
-#                  dbname = "sandbox",
-#                  host = "localhost",
-#                  port = 5432,
-#                  user = "mzaloznik",
-#                  password = Sys.getenv("PG_local_MAJA_PSW"))
-# dbExecute(con, "set search_path to test_platform")
 # on.exit(dbDisconnect)
-# x <- prepare_category_table(meta, con)
+# con <- make_test_connection()
+# meta <- ZRSZfetchR:::meta[1,]
+# x <- prepare_category_table(meta, con, schema = "test_platform")
 # stop_db_capturing()
-
+#
 # start_db_capturing()
-# con <- dbConnect(RPostgres::Postgres(),
-#                  dbname = "sandbox",
-#                  host = "localhost",
-#                  port = 5432,
-#                  user = "mzaloznik",
-#                  password = Sys.getenv("PG_local_MAJA_PSW"))
-# dbExecute(con, "set search_path to test_platform")
 # on.exit(dbDisconnect)
-# x <- prepare_category_relationship_table(meta, con)
+# con <- make_test_connection()
+# meta <- ZRSZfetchR:::meta[1,]
+# x <- prepare_category_relationship_table(meta, con, schema = "test_platform")
 # stop_db_capturing()
-
+#
 # start_db_capturing()
-# con <- dbConnect(RPostgres::Postgres(),
-#                  dbname = "sandbox",
-#                  host = "localhost",
-#                  port = 5432,
-#                  user = "mzaloznik",
-#                  password = Sys.getenv("PG_local_MAJA_PSW"))
-# dbExecute(con, "set search_path to test_platform")
 # on.exit(dbDisconnect)
-# x <- prepare_category_table_table(meta, con)
+# con <- make_test_connection()
+# meta <- ZRSZfetchR:::meta[1,]
+# x <- prepare_category_table_table(meta, con, schema = "test_platform")
 # stop_db_capturing()
-
+#
 # start_db_capturing()
-# con <- dbConnect(RPostgres::Postgres(),
-#                  dbname = "sandbox",
-#                  host = "localhost",
-#                  port = 5432,
-#                  user = "mzaloznik",
-#                  password = Sys.getenv("PG_local_MAJA_PSW"))
-# dbExecute(con, "set search_path to test_platform")
 # on.exit(dbDisconnect)
-# x <- prepare_category_table_table(meta, con)
+# con <- make_test_connection()
+# meta <- ZRSZfetchR:::meta[1,]
+# x <- prepare_table_dimensions_table(meta, con, schema = "test_platform")
 # stop_db_capturing()
-
+#
 # start_db_capturing()
-# con <- dbConnect(RPostgres::Postgres(),
-#                  dbname = "sandbox",
-#                  host = "localhost",
-#                  port = 5432,
-#                  user = "mzaloznik",
-#                  password = Sys.getenv("PG_local_MAJA_PSW"))
-# dbExecute(con, "set search_path to test_platform")
 # on.exit(dbDisconnect)
-# x <- prepare_table_dimensions_table(meta, con)
+# con <- make_test_connection()
+# meta <- ZRSZfetchR:::meta[1,]
+# x <- prepare_dimension_levels_table(meta, con, schema = "test_platform")
 # stop_db_capturing()
-
+#
 # start_db_capturing()
-# con <- dbConnect(RPostgres::Postgres(),
-#                  dbname = "sandbox",
-#                  host = "localhost",
-#                  port = 5432,
-#                  user = "mzaloznik",
-#                  password = Sys.getenv("PG_local_MAJA_PSW"))
-# dbExecute(con, "set search_path to test_platform")
 # on.exit(dbDisconnect)
-# x <- prepare_dimension_levels_table(meta, con)
+# con <- make_test_connection()
+# meta <- ZRSZfetchR:::meta[1,]
+# x <- prepare_series_table(meta, con, schema = "test_platform")
 # stop_db_capturing()
-
+#
 # start_db_capturing()
-# con <- dbConnect(RPostgres::Postgres(),
-#                  dbname = "sandbox",
-#                  host = "localhost",
-#                  port = 5432,
-#                  user = "mzaloznik",
-#                  password = Sys.getenv("PG_local_MAJA_PSW"))
-# dbExecute(con, "set search_path to test_platform")
 # on.exit(dbDisconnect)
-# x <- prepare_series_table(meta, con)
+# con <- make_test_connection()
+# meta <- ZRSZfetchR:::meta[1,]
+# x <- prepare_series_levels_table(meta, con, schema = "test_platform")
 # stop_db_capturing()
-
+#
 # start_db_capturing()
-# con <- dbConnect(RPostgres::Postgres(),
-#                  dbname = "sandbox",
-#                  host = "localhost",
-#                  port = 5432,
-#                  user = "mzaloznik",
-#                  password = Sys.getenv("PG_local_MAJA_PSW"))
-# dbExecute(con, "set search_path to test_platform")
 # on.exit(dbDisconnect)
-# x <- prepare_series_levels_table(meta, con)
+# con <- make_test_connection()
+# meta <- ZRSZfetchR:::meta[2,]
+# x <- ZRSZ_import_structure(meta, con, schema = "test_platform")
 # stop_db_capturing()
-
-
+#
+# # Set the TESTTHAT environment variable to ensure fixed timestamp is used
+# Sys.setenv(TESTTHAT = "true")
+#
 # start_db_capturing()
-# con <- dbConnect(RPostgres::Postgres(),
-#                  dbname = "sandbox",
-#                  host = "localhost",
-#                  port = 5432,
-#                  user = "mzaloznik",
-#                  password = Sys.getenv("PG_local_MAJA_PSW"))
-# dbExecute(con, "set search_path to test_platform")
+# con <- make_test_connection()
 # on.exit(dbDisconnect)
-# insert_new_source(con)
+# meta <- ZRSZfetchR:::meta[2,]
+# x <- ZRSZ_import_data_points(meta, con, schema = "test_platform")
 # stop_db_capturing()
+#
+# # Reset the environment variable
+# Sys.setenv(TESTTHAT = "")
 
-# start_db_capturing()
-# con <- dbConnect(RPostgres::Postgres(),
-#                  dbname = "sandbox",
-#                  host = "localhost",
-#                  port = 5432,
-#                  user = "mzaloznik",
-#                  password = Sys.getenv("PG_local_MAJA_PSW"))
-# dbExecute(con, "set search_path to test_platform")
-# on.exit(dbDisconnect)
-# x <- insert_new_table_structures(meta, con)
-# stop_db_capturing()
-
-# start_db_capturing()
-# con <- dbConnect(RPostgres::Postgres(),
-#                  dbname = "sandbox",
-#                  host = "localhost",
-#                  port = 5432,
-#                  user = "mzaloznik",
-#                  password = Sys.getenv("PG_local_MAJA_PSW"))
-# dbExecute(con, "set search_path to test_platform")
-# on.exit(dbDisconnect)
-# vintages <- prepare_vintage_table(meta, df, con)
-# stop_db_capturing()
-
-# start_db_capturing()
-# con <- dbConnect(RPostgres::Postgres(),
-#                  dbname = "sandbox",
-#                  host = "localhost",
-#                  port = 5432,
-#                  user = "mzaloznik",
-#                  password = Sys.getenv("PG_local_MAJA_PSW"))
-# dbExecute(con, "set search_path to test_platform")
-# on.exit(dbDisconnect)
-# vintages <- prepare_vintage_table(meta, df, con)
-# stop_db_capturing()
-
-# start_db_capturing()
-# con <- dbConnect(RPostgres::Postgres(),
-#                  dbname = "sandbox",
-#                  host = "localhost",
-#                  port = 5432,
-#                  user = "mzaloznik",
-#                  password = Sys.getenv("PG_local_MAJA_PSW"))
-# dbExecute(con, "set search_path to test_platform")
-# on.exit(dbDisconnect)
-# res <- SURSfetchR::sql_function_call(con,
-#                                      "insert_new_vintage",
-#                                      as.list(vintages))
-# stop_db_capturing()
-
-# start_db_capturing()
-# con <- dbConnect(RPostgres::Postgres(),
-#                  dbname = "sandbox",
-#                  host = "localhost",
-#                  port = 5432,
-#                  user = "mzaloznik",
-#                  password = Sys.getenv("PG_local_MAJA_PSW"))
-# dbExecute(con, "set search_path to test_platform")
-# on.exit(dbDisconnect)
-# df <- prepare_data_table(meta, df, con)
-# stop_db_capturing()
-
-
-# start_db_capturing()
-# con <- dbConnect(RPostgres::Postgres(),
-#                  dbname = "platform",
-#                  host = "localhost",
-#                  port = 5432,
-#                  user = "postgres",
-#                  password = Sys.getenv("PG_PG_PSW"))
-# dbExecute(con, "set search_path to test_platform")
-# on.exit(dbDisconnect)
-# insert_new_data(meta, df, con, schema = "test_platform")
-# stop_db_capturing()
-
-# start_db_capturing()
-# con <- DBI::dbConnect(RPostgres::Postgres(),
-#                  dbname = "platform",
-#                  host = "localhost",
-#                  port = 5432,
-#                  user = "postgres",
-#                  password = Sys.getenv("PG_PG_PSW"))
-# DBI::dbExecute(con, "set search_path to test_platform")
-# on.exit(dbDisconnect)
-# zrsz_bo_script(con, schema = "test_platform")
-# stop_db_capturing()
+# UMARimportR::delete_vintage(con,116213, "test_platform")

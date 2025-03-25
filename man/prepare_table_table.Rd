@@ -4,12 +4,16 @@
 \alias{prepare_table_table}
 \title{Prepare table to insert into `table` table}
 \usage{
-prepare_table_table(meta, con)
+prepare_table_table(meta, keep_vintage = FALSE, con, schema = "platform")
 }
 \arguments{
 \item{meta}{dataframe with code, name, url and note columns}
 
+\item{keep_vintage}{logical indicating whether to keep vintages, defaults to F}
+
 \item{con}{connection to the database}
+
+\item{schema}{schema name}
 }
 \value{
 a dataframe with the `code`, `name`, `source_id`, `url`, and `notes` columns
@@ -18,5 +22,5 @@ for this table.
 \description{
 Helper function that manually prepares the table table.
 Returns table ready to insert into the `table` table with the db_writing family
-of functions from SURSfetchR using \link[SURSfetchR]{sql_function_call}
+of functions from `UMARimportR`.
 }

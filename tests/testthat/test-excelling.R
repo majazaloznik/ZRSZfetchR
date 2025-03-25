@@ -1,6 +1,10 @@
-test_that("BO excelreading works", {
+test_that("BO and BO OS excel reading works", {
   filepath <- test_path("testdata","Mesecno_gibanje_BO_1992-2023.xlsx")
   df <- zrsz_bo_excel_parser(filepath)
+  expect_equal(ncol(df), 2)
+  expect_true(any(!is.na(df$value)))
+  filepath <- test_path("testdata","Stopnja_BO_OS_2005-2025.xls")
+  df <- zrsz_bo_os_excel_parser(filepath)
   expect_equal(ncol(df), 2)
   expect_true(any(!is.na(df$value)))
 })

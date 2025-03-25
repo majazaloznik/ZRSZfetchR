@@ -4,12 +4,14 @@
 \alias{prepare_table_dimensions_table}
 \title{Prepare table to insert into `table_dimensions` table}
 \usage{
-prepare_table_dimensions_table(meta, con)
+prepare_table_dimensions_table(meta, con, schema = "platform")
 }
 \arguments{
 \item{meta}{dataframe with code, name, url and note columns}
 
 \item{con}{connection to the database}
+
+\item{schema}{schema name}
 }
 \value{
 a dataframe with the `table_id`, `dimension_name`, `time` columns for

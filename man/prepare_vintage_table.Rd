@@ -4,7 +4,7 @@
 \alias{prepare_vintage_table}
 \title{Prepare table to insert into `vintage` table}
 \usage{
-prepare_vintage_table(meta, df, con)
+prepare_vintage_table(meta, df, con, schema)
 }
 \arguments{
 \item{meta}{dataframe with code, name, url and note columns}
@@ -12,6 +12,8 @@ prepare_vintage_table(meta, df, con)
 \item{df}{parsed data (with at least a period column)}
 
 \item{con}{connection to database}
+
+\item{schema}{schema name}
 }
 \value{
 vintage table ready to insert

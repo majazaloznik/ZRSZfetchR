@@ -15,18 +15,19 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Imports: 
     DBI (>= 1.1.3),
     dplyr (>= 1.1.2),
     openxlsx,
+    readxl,
     RPostgres (>= 1.4.5),
-    SURSfetchR (>= 0.0.4),
+    UMARimportR (>= 0.1.0),
     tidyr (>= 1.3.0),
     UMARaccessR (>= 0.1.0)
 Remotes:
-    majazaloznik/SURSfetchR,
+    majazaloznik/UMARimportR,
     majazaloznik/UMARaccessR
 Depends: 
-    R (>= 2.10)
+    R (>= 3.5)
 VignetteBuilder: knitr

@@ -4,12 +4,14 @@
 \alias{prepare_series_table}
 \title{Prepare table to insert into `series` table}
 \usage{
-prepare_series_table(meta, con)
+prepare_series_table(meta, con, schema)
 }
 \arguments{
 \item{meta}{dataframe with code, name, url and note columns}
 
 \item{con}{connection to the database}
+
+\item{schema}{schema name}
 }
 \value{
 a dataframe with the following columns: `name_long`, `code`,

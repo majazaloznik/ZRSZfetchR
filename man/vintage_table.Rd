@@ -4,14 +4,14 @@
 \alias{vintage_table}
 \title{Prepare vintage table}
 \usage{
-vintage_table(tbl_id, con)
+vintage_table(tbl_id, con, schema)
 }
 \arguments{
 \item{tbl_id}{numeric table id}
 
 \item{con}{connection to the database.}
 
-\item{meta}{dataframe with code, name, url and note columns}
+\item{schema}{schema name}
 }
 \value{
 data frame with `series_id` and `published` columns
