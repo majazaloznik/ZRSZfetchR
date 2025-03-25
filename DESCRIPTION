@@ -1,7 +1,7 @@
 Package: ZRSZfetchR
 Type: Package
 Title: Parse, Transform & Import ZRSZ Data into the UMAR Database
-Version: 0.1.1
+Version: 1.0.0
 Author: Maja Zaloznik
 Maintainer: Maja Zaloznik <maja.zaloznik@gmail.com>
 Description: One of a family of fetchR packages preping data to be imported into the UMAR database.
