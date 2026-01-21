@@ -3,7 +3,8 @@
 source("tests/testthat/helper-connection.R")
 
 # Enable verbose debugging to see query hashes
-options(dittodb.debug = TRUE)
+options(dittodb.debug = FALSE)
+
 
 # start_db_capturing()
 # con <- make_test_connection()
@@ -70,12 +71,12 @@ options(dittodb.debug = TRUE)
 # x <- prepare_series_levels_table(meta, con, schema = "test_platform")
 # stop_db_capturing()
 #
-# start_db_capturing()
-# on.exit(dbDisconnect)
-# con <- make_test_connection()
-# meta <- ZRSZfetchR:::meta[2,]
-# x <- ZRSZ_import_structure(meta, con, schema = "test_platform")
-# stop_db_capturing()
+start_db_capturing()
+on.exit(dbDisconnect)
+con <- make_test_connection()
+meta <- ZRSZfetchR:::meta[2,]
+x <- ZRSZ_import_structure(meta, con, schema = "test_platform")
+stop_db_capturing()
 #
 # # Set the TESTTHAT environment variable to ensure fixed timestamp is used
 # Sys.setenv(TESTTHAT = "true")
@@ -90,4 +91,12 @@ options(dittodb.debug = TRUE)
 # # Reset the environment variable
 # Sys.setenv(TESTTHAT = "")
 
+start_db_capturing()
+on.exit(dbDisconnect)
+con <- make_test_connection()
+meta <- ZRSZfetchR:::meta[3,]
+x <- ZRSZ_import_structure(meta, con, schema = "test_platform")
+stop_db_capturing()
+
 # UMARimportR::delete_vintage(con,116213, "test_platform")
+UMARimportR::vintage_cleanup(con, "test_platform")

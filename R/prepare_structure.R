@@ -135,14 +135,22 @@ prepare_category_table_table <- function(meta, con, schema = "platform") {
 #' @export
 #' @importFrom stats na.omit
 prepare_table_dimensions_table <- function(meta, con, schema = "platform"){
-  x <- meta$code
-  data.frame(code = x)  |>
-    dplyr::mutate(table_id = UMARaccessR::sql_get_table_id_from_table_code(con, code, schema)) |>
-    dplyr::mutate(dimension = "Vrednost",
-                  is_time = rep(0)) |>
-    dplyr::select(-code) |>
-    dplyr::arrange(table_id)|>
-    na.omit()
+  table_id <- UMARaccessR::sql_get_table_id_from_table_code(con, meta$code, schema)
+  if(is.na(meta$dimensions)) {
+    # Single series - use dummy "Vrednost" dimension
+    return(data.frame(
+      table_id = table_id,
+      dimension = "Vrednost",
+      is_time = FALSE
+    ))
+  }
+  # Multi-series - extract dimension names from meta
+  dims <- strsplit(meta$dimensions, ",\\s*")[[1]]
+  data.frame(
+    table_id = table_id,
+    dimension = dims,
+    is_time = FALSE
+  )
 }
 
 
@@ -164,11 +172,29 @@ prepare_table_dimensions_table <- function(meta, con, schema = "platform"){
 #' @importFrom stats na.omit
 prepare_dimension_levels_table <- function(meta, con, schema = "platform") {
   table_id <- UMARaccessR::sql_get_table_id_from_table_code(con, meta$code, schema)
-  dim_id <- UMARaccessR::sql_get_dimension_id_from_table_id_and_dimension(table_id, "Vrednost", con, schema)
-  data.frame(tab_dim_id = dim_id,
-             level_value = "0",
-             level_text = meta$name)|>
-    na.omit()
+
+  if(is.na(meta$dimensions)) {
+    # Single series - hardcoded dummy level
+    dim_id <- UMARaccessR::sql_get_dimension_id_from_table_id_and_dimension(
+      table_id, "Vrednost", con, schema)
+    return(data.frame(
+      tab_dim_id = dim_id,
+      level_value = "0",
+      level_text = meta$name))}
+  # Multi-series - get levels from package data
+  levels_data <- ZRSZfetchR:::dimension_levels |>
+    dplyr::filter(table_code == meta$code)
+
+  if(nrow(levels_data) == 0) {
+    stop(paste("No dimension levels defined for table", meta$code))}
+  # Get dimension IDs and join
+  levels_data |>
+    dplyr::rowwise() |>
+    dplyr::mutate(
+      tab_dim_id = UMARaccessR::sql_get_dimension_id_from_table_id_and_dimension(
+        table_id, dimension, con, schema)) |>
+    dplyr::ungroup() |>
+    dplyr::select(tab_dim_id, level_value, level_text)
 }
 
 
@@ -188,19 +214,47 @@ prepare_dimension_levels_table <- function(meta, con, schema = "platform") {
 #' well as the same number of rows as there are series
 #' @export
 
-
 prepare_series_table <- function(meta, con, schema){
   tbl_id <- UMARaccessR::sql_get_table_id_from_table_code(con, meta$code, schema)
-  dim_id <- UMARaccessR::sql_get_dimension_id_from_table_id_and_dimension(tbl_id, "Vrednost", con, schema)
-  dim_level <- UMARaccessR::sql_get_dimension_levels_from_table_id(tbl_id, con, schema) |>
-    dplyr::pull(level_value)
-  data.frame(table_id = tbl_id,
-             name_long = meta$name,
-             unit_id = UMARaccessR::sql_get_unit_id_from_unit_name("\u0161tevilo", con, schema),
-             code = paste0("ZRSZ--", meta$code, "--", dim_level, "--M"),
-             interval_id = "M")
-}
+  unit_id <- UMARaccessR::sql_get_unit_id_from_unit_name("\u0161tevilo", con, schema)
 
+  if(is.na(meta$dimensions)) {
+    # Single series - get the "0" level
+    dim_level <- UMARaccessR::sql_get_dimension_levels_from_table_id(tbl_id, con, schema) |>
+      dplyr::pull(level_value)
+
+    return(data.frame(
+      table_id = tbl_id,
+      name_long = meta$name,
+      unit_id = unit_id,
+      code = paste0("ZRSZ--", meta$code, "--", dim_level, "--M"),
+      interval_id = "M"
+    ))
+  }
+
+  # Multi-series - create one per dimension level
+  dims <- strsplit(meta$dimensions, ",\\s*")[[1]]
+  levels_data <- ZRSZfetchR:::dimension_levels |>
+    dplyr::filter(table_code == meta$code)
+
+  # For single dimension, create series for each level
+  # For multiple dimensions, would need expand.grid - but let's keep simple for now
+  if(length(dims) == 1) {
+    dim_name <- dims[1]
+    levels_data |>
+      dplyr::filter(dimension == dim_name) |>
+      dplyr::mutate(
+        table_id = tbl_id,
+        name_long = paste(meta$name, "-", level_text),
+        unit_id = unit_id,
+        code = paste0("ZRSZ--", meta$code, "--", level_value, "--M"),
+        interval_id = "M"
+      ) |>
+      dplyr::select(table_id, name_long, unit_id, code, interval_id)
+  } else {
+    stop("Multiple dimensions not yet implemented")
+  }
+}
 
 #' Prepare table to insert into `series_levels` table
 #'

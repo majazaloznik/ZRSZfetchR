@@ -17,7 +17,7 @@ vintage_table <- function(tbl_id, con, schema){
   } else {
     published_time <- Sys.time()
   }
-  
+
   UMARaccessR::sql_get_series_ids_from_table_id(tbl_id, con, schema) |>
      dplyr::select(series_id=id) |>
     dplyr::mutate(published = published_time)
@@ -124,17 +124,33 @@ get_datapoints <- function(meta){
 #' @return a list with data, table_id, dimension_names and dimension_ids
 #' @export
 prepare_datapoint_table <- function(df, meta, con, schema){
-  # get vintage id
-  tbl_id <-  UMARaccessR::sql_get_table_id_from_table_code(con, meta$code, schema)
+  tbl_id <- UMARaccessR::sql_get_table_id_from_table_code(con, meta$code, schema)
 
+  if(is.na(meta$dimensions)) {
+    # Single series - add dummy dimension
+    df <- df |>
+      dplyr::mutate(Vrednost = "0")
+    dimension_names <- "Vrednost"
+  } else {
+    # Multi-series - dimensions already in df from parser
+    dimension_names <- strsplit(meta$dimensions, ",\\s*")[[1]]
+  }
+
+  # Add flag column and rename period
   df <- df |>
-    dplyr::mutate(Vrednost = "0",
-                  flag = "") |>
+    dplyr::mutate(flag = "") |>
     dplyr::rename(time = period)
 
-  list(data = df,
-       table_id = tbl_id,
-       dimension_names = "Vrednost",
-       dimension_ids = UMARaccessR::sql_get_dimension_id_from_table_id_and_dimension(tbl_id, "Vrednost", con, schema),
-       interval_id = "M")
+  # Get dimension IDs
+  dimension_ids <- purrr::map_dbl(dimension_names, function(dim_name) {
+    UMARaccessR::sql_get_dimension_id_from_table_id_and_dimension(tbl_id, dim_name, con, schema)
+  })
+
+  list(
+    data = df,
+    table_id = tbl_id,
+    dimension_names = dimension_names,
+    dimension_ids = dimension_ids,
+    interval_id = "M"
+  )
 }
