@@ -23,6 +23,7 @@ meta <- rbind(meta, data.frame(
   dimensions = NA
 ))
 
+
 # Add the new BO izobrazba table
 meta <- rbind(meta, data.frame(
   code = "BO_SLO_izob",
@@ -74,6 +75,20 @@ meta <- rbind(meta, data.frame(
   extension = ".xls",
   dimensions = "spol"
 ))
+
+# Add the new BO OS table
+meta <- rbind(meta, data.frame(
+  code = "DN",
+  name = "Število prejemnikov denarnega nadomestila",
+  url = "https://www.ess.gov.si/partnerji/trg-dela/trg-dela-v-stevilkah/",
+  notes = NA,
+  category = "Brezposelnost",
+  excelling_function = "zrsz_dn_excel_parser",
+  partial_file_url = "https://www.ess.gov.si/fileadmin/user_upload/Trg_dela/Dokumenti_TD/Trg_dela_v_stevilkah/Pravica_iz_zavarovanja/Prejemniki_DN_2007-",
+  extension = ".xls",
+  dimensions = NA
+))
+
 
 dimension_levels <- data.frame(
   table_code = character(),
@@ -135,6 +150,9 @@ dimension_levels <- rbind(dimension_levels, data.frame(
                  "ženske"),
   stringsAsFactors = FALSE
 ))
+
+
+
 
 usethis::use_data(meta, dimension_levels,
                   internal = TRUE,
