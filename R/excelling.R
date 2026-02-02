@@ -710,3 +710,107 @@ zrsz_dn_excel_parser <- function(file_path) {
 
 
 
+#' ZRSZ TOK Excel table parser
+#'
+#' Parsing function to extract the data in the prijave odjave
+#'  Excel file. The parser extracts data for eleven series
+#' from each sheet and combines them into long time series
+#'
+#' @param file_path path to the excel file
+#'
+#' @return dataframe with period and value ready to import into database
+#' @export
+zrsz_tok_excel_parser <- function(file_path) {
+  # Get the sheet names
+  sheet_names <- readxl::excel_sheets(file_path)
+
+  # Read the data from each sheet and transform
+  output_list <- lapply(sheet_names, function(sheet_name) {
+    # Read the first 20 rows to find header and data positions
+    df <- readxl::read_excel(file_path, sheet = sheet_name, range = "A1:M15",
+                             col_names = FALSE,.name_repair = "minimal")  # Don't use first row as column names
+
+    # Find header row (looking for "Območne službe")
+    first_row <- which(df[[1]] %in% c("NOVOPRIJAVLJENE OSEBE", "PRILIV", "Prijave"))
+    if (length(first_row) == 0) {
+      stop(paste("Could not find header row with 'NOVOPRIJAVLJENE OSEBE' in sheet", sheet_name))
+    }
+
+    # Now read the actual data with correct row positions
+    df <- suppressMessages(readxl::read_excel(file_path, sheet = sheet_name,
+                                              range = paste0("A", first_row - 1, ":M", first_row + 13),
+                                              col_names = FALSE,.name_repair = "minimal"))  # Don't use first row as column names
+
+    # Get the header row (first row after reading)
+    header <- df[1,]
+    header[1] <- "razlog"
+    colnames(df) <- header
+
+    df <- df[-1, ]  |>
+      dplyr::filter(!is.na(razlog)) |>
+      dplyr::mutate(razlog = c("pTot", "pPZ", "pPD", "pD\u010c", "pOR",
+                            "oTot", "oV", "oPZ", "oPD", "oOS", "oNZ", "oDE", "oZN"))
+
+
+    # Convert to long format, excluding the first column (which contains row names)
+    full <- df |>
+      tidyr::pivot_longer(-1, names_to = "month", values_to = "value") |>
+      dplyr::mutate(
+        # Convert month abbreviations or Roman numerals to numbers
+        month_num = dplyr::case_when(
+          # Handle three-letter abbreviations with period
+          tolower(month) == "jan." ~ "01",
+          tolower(month) == "feb." ~ "02",
+          tolower(month) == "mar." ~ "03",
+          tolower(month) == "apr." ~ "04",
+          tolower(month) == "maj" ~ "05",
+          tolower(month) == "maj." ~ "05",
+          tolower(month) == "jun." ~ "06",
+          tolower(month) == "junij" ~ "06",
+          tolower(month) == "jul." ~ "07",
+          tolower(month) == "julij" ~ "07",
+          tolower(month) == "avg." ~ "08",
+          tolower(month) == "avg" ~ "08",
+          tolower(month) == "avgust" ~ "08",
+          tolower(month) == "sep." ~ "09",
+          tolower(month) == "september" ~ "09",
+          tolower(month) == "sept." ~ "09",
+          tolower(month) == "sep" ~ "09",
+          tolower(month) == "okt." ~ "10",
+          tolower(month) == "oktober" ~ "10",
+          tolower(month) == "okt" ~ "10",
+          tolower(month) == "nov." ~ "11",
+          tolower(month) == "november" ~ "11",
+          tolower(month) == "nov" ~ "11",
+          tolower(month) == "dec." ~ "12",
+          tolower(month) == "december" ~ "12",
+          tolower(month) == "dec" ~ "12",
+          # Handle Roman numerals
+          month == "I" ~ "01",
+          month == "II" ~ "02",
+          month == "III" ~ "03",
+          month == "IV" ~ "04",
+          month == "V" ~ "05",
+          month == "VI" ~ "06",
+          month == "VII" ~ "07",
+          month == "VIII" ~ "08",
+          month == "IX" ~ "09",
+          month == "X" ~ "10",
+          month == "XI" ~ "11",
+          month == "XII" ~ "12",
+          TRUE ~ NA_character_
+        ),
+        # Create period string in format YYYYMM
+        period = paste0(sheet_name, "M", month_num)
+      ) |>
+      dplyr::select(razlog, period, value) |>
+      dplyr::filter(!is.na(value))  # Remove any NA values
+  })
+
+  # Combine all sheets
+  do.call(rbind, output_list) |>
+    dplyr::arrange(period)  # Sort by period
+}
+
+
+

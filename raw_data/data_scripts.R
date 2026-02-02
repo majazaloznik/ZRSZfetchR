@@ -76,7 +76,7 @@ meta <- rbind(meta, data.frame(
   dimensions = "spol"
 ))
 
-# Add the new BO OS table
+# Add the new DN table
 meta <- rbind(meta, data.frame(
   code = "DN",
   name = "Število prejemnikov denarnega nadomestila",
@@ -87,6 +87,19 @@ meta <- rbind(meta, data.frame(
   partial_file_url = "https://www.ess.gov.si/fileadmin/user_upload/Trg_dela/Dokumenti_TD/Trg_dela_v_stevilkah/Pravica_iz_zavarovanja/Prejemniki_DN_2007-",
   extension = ".xls",
   dimensions = NA
+))
+
+# Add the new Tokovi table
+meta <- rbind(meta, data.frame(
+  code = "TOK",
+  name = "Novoprijavljene in odjavljene brezposelne osebe",
+  url = "https://www.ess.gov.si/partnerji/trg-dela/trg-dela-v-stevilkah/",
+  notes = NA,
+  category = "Brezposelnost",
+  excelling_function = "zrsz_tok_excel_parser",
+  partial_file_url = "https://www.ess.gov.si/fileadmin/user_upload/Trg_dela/Dokumenti_TD/Trg_dela_v_stevilkah/Prijavljeni_in_odjavljeni/Prijave_odjave_2005-",
+  extension = ".xls",
+  dimensions = "razlog"
 ))
 
 
@@ -151,6 +164,27 @@ dimension_levels <- rbind(dimension_levels, data.frame(
   stringsAsFactors = FALSE
 ))
 
+# TOK dimensions
+dimension_levels <- rbind(dimension_levels, data.frame(
+  table_code = "TOK",
+  dimension = "razlog",
+  level_value = c("pTot", "pPZ", "pPD", "pDČ", "pOR",
+                  "oTot", "oV", "oPZ", "oPD", "oOS", "oNZ", "oDE", "oZN"),
+  level_text = c("Novoprijavljene osebe",
+                 "Prijava - iskalci prve zaposlitve",
+                 "Prijava - presežni delavci in stečajniki",
+                 "Prijava - iztek zaposlitve za določen čas",
+                 "Prijava - ostali razlogi",
+                 "Odjavljene osebe",
+                 "Odjava - Vključeni v zaposlitev",
+                 "Odjava - prva zaposlitev",
+                 "Odjava - presežni delavci in stečajniki",
+                 "Odjava - ostale vključitve",
+                 "Odjava - Odjave iz razlogov, ki ne pomenijo zaposlitve",
+                 "Odjava - Prijava v druge evidence",
+                 "Odjava - prijava v evidenco začasno nezaposljivih"  ),
+  stringsAsFactors = FALSE
+))
 
 
 
