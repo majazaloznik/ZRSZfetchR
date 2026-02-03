@@ -813,4 +813,45 @@ zrsz_tok_excel_parser <- function(file_path) {
 }
 
 
+#' ZRSZ DD Excel table parser
+#'
+#' Parsing function to extract the data in the delovna dovoljenja (po spolu)
+#'  Excel file. The parser extracts data for the SKupaj series
+#' from each sheet and combines them into one long time series.
+#' We are ignoring the sheets before 2012, because they don't have
+#' data for all 12 months for some reason...
+#'
+#' @param file_path path to the excel file
+#'
+#' @return dataframe with period and value ready to import into database
+#' @export
+zrsz_dd_excel_parser <- function(file_path) {
+  # Get the sheet names
+  sheet_names <- readxl::excel_sheets(file_path)[-(1:7)]
+
+  # Read the data from each sheet and transform
+  output_list <- lapply(sheet_names, function(sheet_name) {
+    # Read the first 20 rows to find header and data positions
+    df <- readxl::read_excel(file_path, sheet = sheet_name, range = "A1:F100",
+                             col_names = FALSE,.name_repair = "minimal")
+
+    colnames(df) <- c(LETTERS[1:5], "value")
+
+
+    final <- df |>
+      dplyr::filter(A == "Skupaj") |>
+      dplyr::select(value) |>
+      dplyr::mutate(period = paste0(sheet_name, "M",
+                                    sprintf("%02d", dplyr::n() -
+                                              dplyr::row_number() + 1))) |>
+      dplyr::relocate(period)
+  })
+  # Combine all sheets
+  do.call(rbind, output_list) |>
+    dplyr::arrange(period)  # Sort by period
+}
+
+
+
+
 

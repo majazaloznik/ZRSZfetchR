@@ -102,6 +102,20 @@ meta <- rbind(meta, data.frame(
   dimensions = "razlog"
 ))
 
+# Add the new delovna dovoljenja table
+meta <- rbind(meta, data.frame(
+  code = "DD",
+  name = "Veljavna delovna dovoljenja",
+  url = "https://www.ess.gov.si/partnerji/trg-dela/trg-dela-v-stevilkah/",
+  notes = NA,
+  category = "Brezposelnost",
+  excelling_function = "zrsz_dd_excel_parser",
+  partial_file_url = "https://www.ess.gov.si/fileadmin/user_upload/Trg_dela/Dokumenti_TD/Trg_dela_v_stevilkah/Zaposlovanje_tujcev/Veljavna_DD_spol_2005-",
+  extension = ".xls",
+  dimensions = NA
+))
+
+
 
 dimension_levels <- data.frame(
   table_code = character(),
