@@ -64,5 +64,5 @@ extract_min6_series <- function(base_path, target_row = "2\\. ISKALEC PONOVNE ZA
     }) |> Filter(Negate(is.null), x = _) |> do.call(rbind, args = _)
   }) |> Filter(Negate(is.null), x = _) |> do.call(rbind, args = _)
 
-  results[order(results$year, results$month), ]
+  results[order(results$period), ]
 }
