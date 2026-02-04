@@ -2,6 +2,7 @@
 
 export(ZRSZ_import_data_points)
 export(ZRSZ_import_structure)
+export(extract_min6_series)
 export(get_datapoints)
 export(prepare_category_relationship_table)
 export(prepare_category_table)
