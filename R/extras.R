@@ -51,7 +51,7 @@ extract_min6_series <- function(base_path, target_row = "2\\. ISKALEC PONOVNE ZA
         value <- as.numeric(df[[2]][target_row[1]])
 
         data.frame(
-          period = sprintf("%dM%02d", year, month),
+          period = paste0( year, "/", month, "/01"),
           # year = year,
           # month = month,
           value = value#,
