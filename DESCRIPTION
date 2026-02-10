@@ -30,5 +30,5 @@ Remotes:
     majazaloznik/UMARimportR,
     majazaloznik/UMARaccessR
 Depends: 
-    R (>= 3.5)
+    R (>= 4.3.0)
 VignetteBuilder: knitr
