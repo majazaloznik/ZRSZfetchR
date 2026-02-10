@@ -318,6 +318,6 @@ update_min1_series <- function(con) {
   # Write back
   openxlsx2::write_xlsx(updated, data_file_path, sheet = "M")
 
-  message("Added period ", format(next_date, "%Y/%m/01"), " with value ", value)
+  message("Added period ", format(next_date, "%Y/%m/01"))
   invisible(updated)
 }
