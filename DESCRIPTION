@@ -25,7 +25,8 @@ Imports:
     UMARimportR (>= 0.1.0),
     tidyr (>= 1.3.0),
     UMARaccessR (>= 0.1.0),
-    purrr
+    purrr,
+    openxlsx2
 Remotes:
     majazaloznik/UMARimportR,
     majazaloznik/UMARaccessR
