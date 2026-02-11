@@ -115,25 +115,21 @@ extract_min1_series <- function(base_path, target_row = "8. BREZPOSELNI NA KONCU
 
       tryCatch({
         df <- readxl::read_excel(files, sheet = 1, col_names = FALSE, .name_repair = "minimal")
-        target_row <- which(grepl(target_row,
-                                  df[[1]], ignore.case = TRUE))
-        if (length(target_row) == 0) return(NULL)
-
-        value1 <- as.numeric(df[[2]][target_row[1]])
-        value2 <- as.numeric(df[[3]][target_row[1]])
-        value3 <- as.numeric(df[[2]][target_row[1] + 4])
-        value4 <- as.numeric(df[[2]][target_row[1] + 7])
 
         data.frame(
           period = as.Date(sprintf("%d-%02d-01", year, month)),
-          # year = year,
-          # month = month,
-          bp = value1,
-          zen = value2,
-          stari = value3,
-          dtbp = value4
-          # source_file = files
+          pr      = as.numeric(df[[2]][13]),  # B13
+          pr_pz   = as.numeric(df[[2]][14]),  # B14
+          od      = as.numeric(df[[2]][19]),  # B19
+          de      = as.numeric(df[[2]][20]),  # B20
+          dd      = as.numeric(df[[2]][22]),  # B22
+          od_sel  = as.numeric(df[[2]][27]),  # B27
+          bp      = as.numeric(df[[2]][28]),  # B28
+          bp_f    = as.numeric(df[[3]][28]),  # C28
+          bp_stari = as.numeric(df[[2]][32]), # B32
+          bd_dt   = as.numeric(df[[2]][35])   # B35
         )
+
       }, error = \(e) {
         warning(sprintf("Error reading %s: %s", files, e$message))
         NULL
@@ -243,14 +239,8 @@ update_min1_series <- function(con) {
   base_path <- "O:/Avtomatizacija/umar-automation-scripts/data/brezposelni/MIN tabele"
   data_file_path <- "O:/Avtomatizacija/umar-data/DR/umar_serije_podatki_DR.xlsx"
 
-  series_codes <- c("UMAR-ZRSZ--DR011--8--S--S--M",
-                    "UMAR-ZRSZ--DR011--8--F--S--M",
-                    "UMAR-ZRSZ--DR011--850P--S--S--M",
-                    "UMAR-ZRSZ--DR011--DBP--S--S--M")
-
-
   # Get last period from database
-  vintage_id <- UMARaccessR::sql_get_vintage_from_series_code(con, series_codes[1])
+  vintage_id <- UMARaccessR::sql_get_vintage_from_series_code(con, "UMAR-ZRSZ--DR011--8--S--S--M")
   last_db_period <- UMARaccessR::sql_get_last_period_from_vintage(con, vintage_id)
   last_db_date <- as.Date(paste0(
     substr(last_db_period, 1, 4), "-",
@@ -288,25 +278,20 @@ update_min1_series <- function(con) {
 
   # Extract value
   df <- readxl::read_excel(files, sheet = 1, col_names = FALSE, .name_repair = "minimal")
-  target_row <- which(grepl("8. BREZPOSELNI NA KONCU MESECA",
-                            df[[1]], ignore.case = TRUE))
-  if (length(target_row) == 0) {
-    message("8. BREZPOSELNI NA KONCU MESECA not found in MIN 1")
-    return(invisible(NULL))
-  }
 
-  value1 <- as.numeric(df[[2]][target_row[1]])
-  value2 <- as.numeric(df[[3]][target_row[1]])
-  value3 <- as.numeric(df[[2]][target_row[1] + 4])
-  value4 <- as.numeric(df[[2]][target_row[1] + 7])
-
-  new_data <- data.frame(
-    period = next_date)
-  new_data[[series_codes[1]]] <- value1
-  new_data[[series_codes[2]]] <- value2
-  new_data[[series_codes[3]]] <- value3
-  new_data[[series_codes[4]]] <- value4
-
+  data.frame(
+    period = next_date,
+    `UMAR-ZRSZ--DR011--2--S--S--M`= as.numeric(df[[2]][13]),  # B13
+    `UMAR-ZRSZ--DR011--IPZ--S--S--M`   = as.numeric(df[[2]][14]),  # B14
+    `UMAR-ZRSZ--DR011--OD--S--S--M`      = as.numeric(df[[2]][19]),  # B19
+    `UMAR-ZRSZ--DR011--DE--S--S--M`      = as.numeric(df[[2]][20]),  # B20
+    `UMAR-ZRSZ--DR011--DD--S--S--M`      = as.numeric(df[[2]][22]),  # B22
+    `UMAR-ZRSZ--DR011--OS--S--S--M`  = as.numeric(df[[2]][27]),  # B27
+    `UMAR-ZRSZ--DR011--8--S--S--M`     = as.numeric(df[[2]][28]),  # B28
+    `UMAR-ZRSZ--DR011--8--F--S--M`    = as.numeric(df[[3]][28]),  # C28
+    `UMAR-ZRSZ--DR011--850P--S--S--M` = as.numeric(df[[2]][32]), # B32
+    `UMAR-ZRSZ--DR011--DBP--S--S--M`   = as.numeric(df[[2]][35])   # B35
+  )
 
 
   # Read existing Excel file
