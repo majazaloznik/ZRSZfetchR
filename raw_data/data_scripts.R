@@ -63,7 +63,7 @@ meta <- rbind(meta, data.frame(
   dimensions = "trajanje"
 ))
 
-# Add the new BO trajanje table
+# Add the new BO spol table
 meta <- rbind(meta, data.frame(
   code = "BO_SLO_spol",
   name = "Gibanje registrirane brezposelnosti po mesecih - spol",
