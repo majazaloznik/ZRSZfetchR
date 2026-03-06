@@ -279,7 +279,7 @@ update_min1_series <- function(con) {
   # Extract value
   df <- readxl::read_excel(files, sheet = 1, col_names = FALSE, .name_repair = "minimal")
 
-  data.frame(
+  new_data <- data.frame(
     period = next_date,
     `UMAR-ZRSZ--DR011--2--S--S--M`= as.numeric(df[[2]][13]),  # B13
     `UMAR-ZRSZ--DR011--IPZ--S--S--M`   = as.numeric(df[[2]][14]),  # B14
@@ -290,7 +290,8 @@ update_min1_series <- function(con) {
     `UMAR-ZRSZ--DR011--8--S--S--M`     = as.numeric(df[[2]][28]),  # B28
     `UMAR-ZRSZ--DR011--8--F--S--M`    = as.numeric(df[[3]][28]),  # C28
     `UMAR-ZRSZ--DR011--850P--S--S--M` = as.numeric(df[[2]][32]), # B32
-    `UMAR-ZRSZ--DR011--DBP--S--S--M`   = as.numeric(df[[2]][35])   # B35
+    `UMAR-ZRSZ--DR011--DBP--S--S--M`   = as.numeric(df[[2]][35]) ,  # B35
+    check.names = FALSE
   )
 
 
