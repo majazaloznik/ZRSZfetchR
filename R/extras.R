@@ -153,9 +153,8 @@ extract_min1_series <- function(base_path, target_row = "8. BREZPOSELNI NA KONCU
 #' @export
 #'
 update_min6_series <- function(con) {
-  base_path <- "O:/Avtomatizacija/umar-automation-scripts/data/brezposelni/MIN tabele"
-  data_file_path <- "O:/Avtomatizacija/umar-data/DR/umar_serije_podatki_DR.xlsx"
-
+  base_path <- "//192.168.38.7/public$/Avtomatizacija/umar-automation-scripts/data/brezposelni/MIN tabele"
+  data_file_path <- "//192.168.38.7/public$/Avtomatizacija/umar-data/DR/umar_serije_podatki_DR.xlsx"
   series_code <- "UMAR-ZRSZ--DR010--2--S--S--M"
 
   # Get last period from database
@@ -236,9 +235,8 @@ update_min6_series <- function(con) {
 #'
 
 update_min1_series <- function(con) {
-  base_path <- "O:/Avtomatizacija/umar-automation-scripts/data/brezposelni/MIN tabele"
-  data_file_path <- "O:/Avtomatizacija/umar-data/DR/umar_serije_podatki_DR.xlsx"
-
+  base_path <- "//192.168.38.7/public$/Avtomatizacija/umar-automation-scripts/data/brezposelni/MIN tabele"
+  data_file_path <- "//192.168.38.7/public$/Avtomatizacija/umar-data/DR/umar_serije_podatki_DR.xlsx"
   # Get last period from database
   vintage_id <- UMARaccessR::sql_get_vintage_from_series_code(con, "UMAR-ZRSZ--DR011--8--S--S--M")
   last_db_period <- UMARaccessR::sql_get_last_period_from_vintage(con, vintage_id)
